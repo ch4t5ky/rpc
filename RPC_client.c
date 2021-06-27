@@ -1,24 +1,27 @@
 #include "RPC.h"
 
 
-void execute_1(char *host, input* input)
+void execute_1(char *host, int pass, char* command)
 {
 	CLIENT *clnt;
 	output  *result;
+	input data;
 
+	data.pass = pass;
+	data.command = command;
 	clnt = clnt_create (host, EXECUTE, EXECUTE_VERS, "udp");
 	if (clnt == NULL) {
 		clnt_pcreateerror (host);
 		exit (1);
 	}
 
-	result = run_1(input, clnt);
+	result = run_1(&data, clnt);
 	if (result == (output *) NULL) {
-		clnt_perror (clnt, "call failed");
+		clnt_perror(clnt, "call failed");
 		exit(1);
 	}
 
-	printf("Result: %d\n", result->result);
+	printf("Result: %s\n", result->result);
 	clnt_destroy (clnt);
 }
 
@@ -26,12 +29,13 @@ void execute_1(char *host, input* input)
 int main(int argc, char *argv[])
 {
 	char *host;
-
-	if (argc < 2) {
-		printf ("usage: %s server_host\n", argv[0]);
-		exit (1);
-	}
 	host = argv[1];
-	execute_1(host);
+	char command[255];
+	int pass;
+	printf("Enter password:");
+	scanf("%d", &pass);
+	printf("Enter command:");
+	scanf("%s", command);
+	execute_1(host, pass, command);
 exit (0);
 }

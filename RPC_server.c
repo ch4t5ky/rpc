@@ -1,22 +1,19 @@
 #include "RPC.h"
-
-output * run_1_svc(input *argp, struct svc_req *rqstp)
+#include <stdio.h>
+#include <stdlib.h>
+output* run_1_svc(input *argp, struct svc_req *rqstp)
 {
-	static output  result;
-	if(argp->pass != "1234") result.result = "Nope. Try Another password";
+	static output result;
+	if(argp->pass != 1234 ) result.result = "Nope. Try Another password";
 	else {
-		char buffer[128];
-		FILE* pipe = popen(argp->command.c_str(), "r");
-		if (!pipe) {
-			result->
-			return resu"popen failed!";
+		int code;
+		code = system(argp->command);
+		if(code == 0) {
+			result.result = "Command successfull executed";
+		} else {
+			result.result = "Failed";
 		}
-
-	while (!feof(pipe)) {
-			if (fgets(buffer, 128, pipe) != NULL)
-		 		result += buffer;
-			}
-			pclose(pipe);
 	}
+
 	return &result;
 }

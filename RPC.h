@@ -15,7 +15,7 @@ extern "C" {
 
 
 struct input {
-	char *pass;
+	int pass;
 	char *command;
 };
 typedef struct input input;

@@ -1,5 +1,5 @@
 struct input {
-  string pass<>;
+  int pass;
   string command<>;
 };
 

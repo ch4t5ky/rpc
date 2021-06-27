@@ -10,7 +10,7 @@ xdr_input (XDR *xdrs, input *objp)
 {
 	register int32_t *buf;
 
-	 if (!xdr_string (xdrs, &objp->pass, ~0))
+	 if (!xdr_int (xdrs, &objp->pass))
 		 return FALSE;
 	 if (!xdr_string (xdrs, &objp->command, ~0))
 		 return FALSE;
